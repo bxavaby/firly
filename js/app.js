@@ -1,7 +1,3 @@
-import L from "leaflet";
-import anime from "animejs";
-import "leaflet/dist/leaflet.css";
-
 class FirlyApp {
   constructor() {
     this.map = null;
