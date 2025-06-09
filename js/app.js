@@ -212,13 +212,11 @@ class FirlyApp {
   }
 
   async loadVIIRSData() {
-    // Remove existing layer
     if (this.currentLayer) {
       this.map.removeLayer(this.currentLayer);
       this.currentLayer = null;
     }
 
-    // Try each data source until one works
     for (const source of this.dataSources) {
       try {
         console.log(`Attempting to load: ${source.name}`);
@@ -228,12 +226,10 @@ class FirlyApp {
           opacity: 0.8,
           maxZoom: source.maxZoom,
           crossOrigin: "anonymous",
-          // Better error handling
           errorTileUrl:
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=",
         });
 
-        // Test if layer loads successfully
         await this.testLayerLoad(this.currentLayer);
 
         this.currentLayer.addTo(this.map);
@@ -241,10 +237,9 @@ class FirlyApp {
 
         console.log(`Successfully loaded: ${source.name}`);
 
-        // Apply night lights enhancement
         this.enhanceNightLights();
 
-        return; // Success, exit loop
+        return;
       } catch (error) {
         console.log(`Failed to load ${source.name}:`, error.message);
         if (this.currentLayer) {
@@ -266,7 +261,7 @@ class FirlyApp {
           resolved = true;
           reject(new Error("Layer load timeout"));
         }
-      }, 10000); // 10 second timeout
+      }, 10000);
 
       const cleanup = () => {
         clearTimeout(timeout);
@@ -284,10 +279,8 @@ class FirlyApp {
 
       layer.on("tileerror", (e) => {
         console.log("Tile error occurred, but continuing...");
-        // Don't reject on individual tile errors, some tiles might be missing
       });
 
-      // Optimistically resolve after a short delay
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
@@ -300,7 +293,6 @@ class FirlyApp {
 
   enhanceNightLights() {
     if (this.currentLayer && this.currentLayer._container) {
-      // Apply visual enhancements for better night lights visibility
       this.currentLayer._container.style.mixBlendMode = "screen";
       this.currentLayer._container.style.filter =
         "brightness(1.0) contrast(1.2) saturate(1.1)";
@@ -332,7 +324,7 @@ class FirlyApp {
     if (!dataPoints) return;
 
     const counter = { value: 2.1 };
-    const targetValue = 12.8; // Realistic number for global night lights data points
+    const targetValue = 12.8;
 
     anime({
       targets: counter,
