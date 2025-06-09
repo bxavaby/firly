@@ -221,7 +221,6 @@ class FirlyApp {
           attribution: source.attribution,
           opacity: 0.8,
           maxZoom: source.maxZoom,
-          crossOrigin: "anonymous",
           errorTileUrl:
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=",
         });
